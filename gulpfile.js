@@ -41,6 +41,25 @@ elixir(function(mix) {
     // Gentelella
     mix.copy('vendor/bower_components/gentelella/build/js/custom.min.js', 'public/js/gentelella.min.js');
 
+
+    // datatables
+    var datatable = 'vendor/bower_components/gentelella/vendors/';
+
+    mix.combine([
+        datatable + 'datatables.net/js/jquery.dataTables.min.js',
+        datatable + 'datatables.net-bs/js/dataTables.bootstrap.min.js',
+        datatable + 'datatables.net-buttons/js/dataTables.buttons.min.js',
+        datatable + 'datatables.net-buttons-bs/js/buttons.bootstrap.min.js',
+        datatable + 'datatables.net-buttons/js/buttons.flash.min.js',
+        datatable + 'datatables.net-buttons/js/buttons.html5.min.js',
+        datatable + 'datatables.net-buttons/js/buttons.print.min.js',
+        datatable + 'datatables.net-fixedheader/js/dataTables.fixedHeader.min.js',
+        datatable + 'datatables.net-keytable/js/dataTables.keyTable.min.js',
+        datatable + 'datatables.net-responsive/js/dataTables.responsive.min.js',
+        datatable + 'datatables.net-responsive-bs/js/responsive.bootstrap.js',
+        datatable + 'datatables.net-scroller/js/dataTables.scroller.min.js',
+    ], 'public/js/all-datatable.min.js');
+
     /**************/
     /* Copy Fonts */
     /**************/
