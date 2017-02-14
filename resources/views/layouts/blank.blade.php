@@ -32,6 +32,15 @@
 
                 @yield('main_container')
 
+                <!-- footer content -->
+                <footer>
+                    <div class="pull-right">
+                        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </footer>
+                <!-- /footer content -->
+
             </div>
         </div>
 
@@ -40,7 +49,7 @@
         <!-- Bootstrap -->
         <script src="{{ asset("js/bootstrap.min.js") }}"></script>
         <!-- Custom Theme Scripts -->
-        <script src="{{ asset("js/gentelella.min.js") }}"></script>
+        <script src="{{ asset("js/custom.js") }}"></script>
 
         @stack('scripts')
 

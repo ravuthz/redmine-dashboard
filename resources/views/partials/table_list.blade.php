@@ -1,6 +1,6 @@
-<div class="x_panel">
+<div class="x_panel tile fixed_height_320">
     <div class="x_title">
-        <h2>{{ $issue_label }}</h2>
+        <h2>{{ $title }}</h2>
         <ul class="nav navbar-right panel_toolbox">
             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
             </li>
@@ -19,21 +19,22 @@
         <div class="clearfix"></div>
     </div>
     <div class="x_content">
-        <table id="{{ $table_id }}" class="table table-striped">
-            <tr>
-                <th>#</th>
-                <th>Project</th>
-                <th>Subject</th>
-            </tr>
-            @foreach($issue_records['issues'] as $issue)
-                @if ($issue['status']['id'] = 1)
-                    <tr>
-                        <td>{{ $issue['id']  }}</td>
-                        <td>{{ $issue['project']['name'] }}</td>
-                        <td>{{ $issue['subject']  }}</td>
-                    </tr>
+        @if ($subtitle)
+            <h4>{{ $subtitle }}</h4>
+        @endif
+
+        <table id="{{ $table_id  }}" class="countries_list">
+            <tbody>
+                @if (!empty($items))
+                    @foreach($items as $item)
+                        <tr>
+                            <td>{{ $item['name'] }}</td>
+                            <td class="fs15 fw700 text-right">{{ $item['number'] }}</td>
+                        </tr>
+                    @endforeach
                 @endif
-            @endforeach
+            </tbody>
         </table>
+
     </div>
 </div>

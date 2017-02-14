@@ -1,6 +1,6 @@
 <div class="x_panel">
     <div class="x_title">
-        <h2>{{ $issue_label }}</h2>
+        <h2>{{ $chart_label  }}</h2>
         <ul class="nav navbar-right panel_toolbox">
             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
             </li>
@@ -19,21 +19,17 @@
         <div class="clearfix"></div>
     </div>
     <div class="x_content">
-        <table id="{{ $table_id }}" class="table table-striped">
+
+        <table>
             <tr>
-                <th>#</th>
-                <th>Project</th>
-                <th>Subject</th>
+                <td>
+                    <canvas id="{{ $chart_id  }}"></canvas>
+                </td>
+                <td>
+                    <ul class="list-group" id="{{ $chart_id }}Table"></ul>
+                </td>
             </tr>
-            @foreach($issue_records['issues'] as $issue)
-                @if ($issue['status']['id'] = 1)
-                    <tr>
-                        <td>{{ $issue['id']  }}</td>
-                        <td>{{ $issue['project']['name'] }}</td>
-                        <td>{{ $issue['subject']  }}</td>
-                    </tr>
-                @endif
-            @endforeach
         </table>
+
     </div>
 </div>
