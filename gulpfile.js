@@ -39,7 +39,7 @@ elixir(function(mix) {
     mix.copy('vendor/bower_components/gentelella/vendors/jquery/dist/jquery.min.js', 'public/js/jquery.min.js');
 
     // Gentelella
-    mix.copy('vendor/bower_components/gentelella/build/js/custom.min.js', 'public/js/gentelella.min.js');
+    //mix.copy('vendor/bower_components/gentelella/build/js/custom.min.js', 'public/js/gentelella.min.js');
 
 
     var vendor = 'vendor/bower_components/gentelella/vendors/';
@@ -57,7 +57,8 @@ elixir(function(mix) {
         vendor + 'datatables.net-keytable/js/dataTables.keyTable.min.js',
         vendor + 'datatables.net-responsive/js/dataTables.responsive.min.js',
         vendor + 'datatables.net-responsive-bs/js/responsive.bootstrap.js',
-        vendor + 'datatables.net-scroller/js/dataTables.scroller.min.js'
+        vendor + 'datatables.net-scroller/js/dataTables.scroller.min.js',
+
     ], 'public/js/all-datatable.min.js');
 
     mix.combine([
@@ -78,7 +79,14 @@ elixir(function(mix) {
         vendor + 'DateJS/build/date.js',
         vendor + 'moment/min/moment.min.js',
         vendor + 'bootstrap-daterangepicker/daterangepicker.js',
-        'vendor/bower_components/gentelella/build/js/custom.min.js'
+        'vendor/bower_components/gentelella/build/js/custom.min.js',
+
+        'node_modules/amcharts3/amcharts/amcharts.js',
+        'node_modules/amcharts3/amcharts/serial.js',
+        'node_modules/amcharts3/amcharts/pie.js',
+        'node_modules/amcharts3/amcharts/plugins/export/export.js',
+        'node_modules/amcharts3/amcharts/themes/light.js'
+
     ], 'public/js/all-dashboard.min.js');
 
     mix.combine([
@@ -86,7 +94,9 @@ elixir(function(mix) {
         vendor + 'font-awesome/css/font-awesome.min.css',
         vendor + 'nprogress/nprogress.css',
         vendor + 'bootstrap-daterangepicker/daterangepicker.css',
-        'vendor/bower_components/gentelella/build/css/custom.min.css'
+        'vendor/bower_components/gentelella/build/css/custom.min.css',
+        'node_modules/amcharts3/amcharts/plugins/export/export.css'
+
     ], 'public/css/all-dashboard.min.css');
 
     mix.copy(vendor + 'Chart.js/dist/Chart.min.js', 'public/js/Chart.min.js');
@@ -100,4 +110,7 @@ elixir(function(mix) {
 
     // Font awesome
     mix.copy('vendor/bower_components/gentelella/vendors/font-awesome/fonts/', 'public/fonts');
+
+    // Copy All images of AmChart
+    mix.copy('node_modules/amcharts3/amcharts/**/*', 'public/amcharts');
 });

@@ -30,14 +30,13 @@ class Issue extends Model
         return $query->where('status_id', $status_id)->limit($limit)->get();
     }
 
-    public function scopeGetByStatusAndUpdatedOn($query, $status_id, $updated_on = NULL, $limit = 10) {
+    public function scopeGetByStatusAndUpdatedOn($query, $status_id, $updated_on = NULL) {
         return $query
             ->where('status_id', $status_id)
-            ->whereDate('updated_on', $updated_on ?: date('Y-m-d'))
-            ->limit($limit)->get();
+            ->whereDate('updated_on', $updated_on ?: date('Y-m-d'))->get();
     }
 
-    public function scopeGetPerProject($query, $status_id = 0, $updated_on = NULL, $limit = 10) {
+    public function scopeGetPerProject($query, $status_id = 0, $updated_on = NULL) {
         if ($status_id) {
             $query->where('status_id', $status_id);
         }
@@ -46,7 +45,7 @@ class Issue extends Model
             $query->whereDate('updated_on', $updated_on);
         }
 
-        return $query->limit($limit)->get();
+        return $query->get();
     }
 
     public function scopeGetFirstByStatus($query, $status_id) {

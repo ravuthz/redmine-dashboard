@@ -31,7 +31,15 @@
             <div class="menu_section">
                 <ul class="nav side-menu">
                     <li>
-                        <a href="{{ URL('/') }}"><i class="fa fa-home"></i> Dashboard</a>
+                        <a>
+                            <i class="fa fa-home"></i>
+                            Dashboard
+                            <span class="fa fa-chevron-down"></span>
+                        </a>
+                        <ul class="nav child_menu">
+                            <li><a href="{{ url('/') }}">Home</a></li>
+                            <li><a href="{{ url('/slider') }}">Slider</a></li>
+                        </ul>
                     </li>
                     <li>
                         <a>

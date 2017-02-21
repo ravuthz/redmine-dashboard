@@ -1,41 +1,29 @@
-<div class="x_panel tile">
-    <div class="x_title">
-        <h2>{{ $title }}</h2>
-        <ul class="nav navbar-right panel_toolbox">
-            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-            </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Settings 1</a>
-                    </li>
-                    <li><a href="#">Settings 2</a>
-                    </li>
-                </ul>
-            </li>
-            <li><a class="close-link"><i class="fa fa-close"></i></a>
-            </li>
-        </ul>
-        <div class="clearfix"></div>
-    </div>
-    <div class="x_content scroll-height-270">
-        <table id="{{ $table_id  }}" class="table table-striped">
-            <thead>
+@component('components.xpanel')
+    @slot('type')
+        tile
+    @endslot
+    @slot('title')
+        {{ $title }}
+    @endslot
+    @slot('content_class')
+        scroll-height-270
+    @endslot
+    <table id="{{ $table_id  }}" class="table table-striped">
+        <thead>
+        <tr>
+            <th>Project</th>
+            <th class="text-right">Number</th>
+        </tr>
+        </thead>
+        <tbody>
+        @if (!empty($items))
+            @foreach($items as $item)
                 <tr>
-                    <th>Project</th>
-                    <th>Number</th>
+                    <td>{{ $item['name'] }}</td>
+                    <td class="fs15 fw700 text-right">{{ $item['number'] }}</td>
                 </tr>
-            </thead>
-            <tbody>
-                @if (!empty($items))
-                    @foreach($items as $item)
-                        <tr>
-                            <td>{{ $item['name'] }}</td>
-                            <td class="fs15 fw700 text-right">{{ $item['number'] }}</td>
-                        </tr>
-                    @endforeach
-                @endif
-            </tbody>
-        </table>
-    </div>
-</div>
+            @endforeach
+        @endif
+        </tbody>
+    </table>
+@endcomponent

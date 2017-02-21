@@ -18,7 +18,7 @@
         <!-- Custom Theme Style -->
         <link href="{{ asset("css/gentelella.min.css") }}" rel="stylesheet">
 
-        <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+        <link rel="stylesheet" href="{{ url('css/all-dashboard.min.css') }}">
 
         <style>
             .fixed-height-270 {
@@ -101,11 +101,11 @@
         <script src="{{ asset("js/bootstrap.min.js") }}"></script>
         <script src="{{ asset('js/all-dashboard.min.js') }}"></script>
 
-        <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
-        <script src="https://www.amcharts.com/lib/3/serial.js"></script>
-        <script src="https://www.amcharts.com/lib/3/pie.js"></script>
-        <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
-        <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+        {{--<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>--}}
+        {{--<script src="https://www.amcharts.com/lib/3/serial.js"></script>--}}
+        {{--<script src="https://www.amcharts.com/lib/3/pie.js"></script>--}}
+        {{--<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>--}}
+        {{--<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>--}}
 
         <script src="{{ asset('js/custom.js') }}"></script>
 
