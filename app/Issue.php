@@ -2,6 +2,8 @@
 
 namespace App;
 
+use DB;
+
 class Issue extends Model
 {
     const MAX_ISSUE = 5;
@@ -12,6 +14,106 @@ class Issue extends Model
         parent::__construct();
         $this->today = '2017-02-10'; // date('Y-m-d')
     }
+
+    public function project()
+    {
+        return $this->belongsTo('App\Project');
+    }
+
+    public function status()
+    {
+        return $this->belongsTo('App\Status')->select(['id', 'name']);
+    }
+
+
+    public function scopeGetByStatus($query, $status_id, $limit= 10) {
+        return $query->where('status_id', $status_id)->limit($limit)->get();
+    }
+
+    public function scopeGetByStatusAndUpdatedOn($query, $status_id, $updated_on = NULL, $limit = 10) {
+        return $query
+            ->where('status_id', $status_id)
+            ->whereDate('updated_on', $updated_on ?: date('Y-m-d'))
+            ->limit($limit)->get();
+    }
+
+    public function scopeGetPerProject($query, $status_id = 0, $updated_on = NULL, $limit = 10) {
+        if ($status_id) {
+            $query->where('status_id', $status_id);
+        }
+
+        if ($updated_on) {
+            $query->whereDate('updated_on', $updated_on);
+        }
+
+        return $query->limit($limit)->get();
+    }
+
+    public function scopeGetFirstByStatus($query, $status_id) {
+        return $query->where('status_id', $status_id)->first();
+    }
+
+    public function scopeCountByStatus($query, $status_id) {
+        return $query->where('status_id', $status_id)->count();
+    }
+
+    public function scopeCountByStatuses($query, $status_ids) {
+        $counts = array();
+        foreach ($status_ids as $id) {
+            $counts[$id] = $query->where('status_id', $id)->count();
+        }
+        return $counts;
+    }
+
+    public function scopeCountPerProjectByStatus($query, $status_id, $updated_on = NULL) {
+        return $query->where('status_id', $status_id)->whereDate('updated_on', $updated_on ?: date('Y-m-d'))->count();
+
+//        $date = $updated_on ?: date('Y-m-d');
+//        $count = $query
+//            ->where('status_id', $status_id)
+//            ->whereDate('updated_on', $date)->count();
+//
+//        return $count;
+
+    }
+
+    public function scopeCountBetween($query, $sdate = null, $edate = null) {
+        $sdate = $sdate ?: '2016-01-01';
+        $edate = $edate ?: '2017-12-31';
+
+        $q = DB::table('issues as p')->selectRaw(
+            'updated_on, DATE_FORMAT(updated_on, "%Y-%m") as `date`, MONTH(updated_on) as `month`, YEAR(updated_on) as `year`,
+            (SELECT count(*) FROM issues WHERE status_id = 1 AND DATE_FORMAT(updated_on, "%Y-%m") = DATE_FORMAT(p.updated_on, "%Y-%m") ) as `status_1`,
+            (SELECT count(*) FROM issues WHERE status_id = 2 AND DATE_FORMAT(updated_on, "%Y-%m") = DATE_FORMAT(p.updated_on, "%Y-%m") ) as `status_2`,
+            (SELECT count(*) FROM issues WHERE status_id = 3 AND DATE_FORMAT(updated_on, "%Y-%m") = DATE_FORMAT(p.updated_on, "%Y-%m") ) as `status_3`,
+            (SELECT count(*) FROM issues WHERE status_id = 4 AND DATE_FORMAT(updated_on, "%Y-%m") = DATE_FORMAT(p.updated_on, "%Y-%m") ) as `status_4`,
+            (SELECT count(*) FROM issues WHERE status_id = 5 AND DATE_FORMAT(updated_on, "%Y-%m") = DATE_FORMAT(p.updated_on, "%Y-%m") ) as `status_5`'
+        );
+
+        if ($sdate == $edate) {
+            $q->whereDate('updated_on', $sdate);
+        } else {
+            $q->whereBetween('updated_on', [$sdate, $edate]);
+        }
+
+        return $q->groupby(DB::raw("MONTH(updated_on)"))
+        ->orderby('updated_on', 'ASC')
+        ->get();
+    }
+
+    public function scopeCountPerProjectByStatuses($query, $status_ids, $updated_on = NULL) {
+        $counts = array();
+        $date = $updated_on ?: date('Y-m-d');
+        foreach ($status_ids as $id) {
+            $counts[$id] = $query->where('status_id', $id)->whereDate('updated_on', $date)->count();
+        }
+        return $counts;
+    }
+
+
+
+
+
 
     public function getBetween($startDate = '2017-01-01', $endDate = '2017-01-31') {
         return $this->client->issue->all([
@@ -29,20 +131,20 @@ class Issue extends Model
         return $this->client->issue_status->listing();
     }
 
-    public function getByStatus($query, $status = 0) {
-        $issue_filter = array(
-            'sort' => 'desc',
-            'limit' => self::MAX_ISSUE
-        );
-
-        if ($status > 0) {
-            $issue_filter['status_id'] = $status;
-        }
-
-        $data = $this->client->issue->all($issue_filter);
-
-        return $data;
-    }
+//    public function getByStatus($query, $status = 0) {
+//        $issue_filter = array(
+//            'sort' => 'desc',
+//            'limit' => self::MAX_ISSUE
+//        );
+//
+//        if ($status > 0) {
+//            $issue_filter['status_id'] = $status;
+//        }
+//
+//        $data = $this->client->issue->all($issue_filter);
+//
+//        return $data;
+//    }
 
     public function countPerProject($issue_filter = array()) {
         $counts = array();
@@ -155,7 +257,5 @@ class Issue extends Model
         return $this->client->issue->all($issue_filter);
     }
 
-    public function listPerProjectArray() {
 
-    }
 }

@@ -19,6 +19,6 @@
         <div class="clearfix"></div>
     </div>
     <div class="x_content">
-        <div id="chartdiv" style="width: 100%; height: 500px; "></div>
+        <div id="{{ $chart_id }}" class="fixed-height-270"></div>
     </div>
 </div>

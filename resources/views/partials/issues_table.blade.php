@@ -18,22 +18,25 @@
         </ul>
         <div class="clearfix"></div>
     </div>
-    <div class="x_content">
+    <div class="x_content scroll-height-270">
         <table id="{{ $table_id }}" class="table table-striped">
-            <tr>
-                <th>#</th>
-                <th>Project</th>
-                <th>Subject</th>
-            </tr>
-            @foreach($issue_records['issues'] as $issue)
-                @if ($issue['status']['id'] = 1)
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Project</th>
+                    <th class="text-right">Subject</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($issue_records as $issue)
                     <tr>
-                        <td>{{ $issue['id']  }}</td>
-                        <td>{{ $issue['project']['name'] }}</td>
-                        <td>{{ $issue['subject']  }}</td>
+                        <td>{{ $issue->id  }}</td>
+                        <td>{{ $issue->project->name }}</td>
+                        <td>{{ $issue->subject  }}</td>
                     </tr>
-                @endif
-            @endforeach
+                @endforeach
+            </tbody>
+
         </table>
     </div>
 </div>

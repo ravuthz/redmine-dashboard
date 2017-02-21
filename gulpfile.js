@@ -61,8 +61,6 @@ elixir(function(mix) {
     ], 'public/js/all-datatable.min.js');
 
     mix.combine([
-        vendor + 'jquery/dist/jquery.min.js',
-        vendor + 'bootstrap/dist/js/bootstrap.min.js',
         vendor + 'fastclick/lib/fastclick.js',
         vendor + 'nprogress/nprogress.js',
         vendor + 'Chart.js/dist/Chart.min.js',
@@ -90,9 +88,6 @@ elixir(function(mix) {
         vendor + 'bootstrap-daterangepicker/daterangepicker.css',
         'vendor/bower_components/gentelella/build/css/custom.min.css'
     ], 'public/css/all-dashboard.min.css');
-
-
-    //vendor/bower_components/gentelella/vendors/nprogress/nprogress.js:18
 
     mix.copy(vendor + 'Chart.js/dist/Chart.min.js', 'public/js/Chart.min.js');
 

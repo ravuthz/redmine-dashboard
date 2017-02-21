@@ -1,4 +1,4 @@
-<div class="x_panel tile fixed_height_320">
+<div class="x_panel tile">
     <div class="x_title">
         <h2>{{ $title }}</h2>
         <ul class="nav navbar-right panel_toolbox">
@@ -18,12 +18,14 @@
         </ul>
         <div class="clearfix"></div>
     </div>
-    <div class="x_content">
-        @if ($subtitle)
-            <h4>{{ $subtitle }}</h4>
-        @endif
-
-        <table id="{{ $table_id  }}" class="countries_list">
+    <div class="x_content scroll-height-270">
+        <table id="{{ $table_id  }}" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Project</th>
+                    <th>Number</th>
+                </tr>
+            </thead>
             <tbody>
                 @if (!empty($items))
                     @foreach($items as $item)
@@ -35,6 +37,5 @@
                 @endif
             </tbody>
         </table>
-
     </div>
 </div>

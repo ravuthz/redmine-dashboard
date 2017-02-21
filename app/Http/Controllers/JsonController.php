@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Issue;
+use App\Project;
+use App\Status;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class JsonController extends Controller
 {
@@ -12,49 +15,62 @@ class JsonController extends Controller
     }
 
     public function issues(Request $request) {
-        return $this->issue->getByStatus($request->status_id);
+        return Issue::getByStatus($request->status_id);
     }
 
     public function count_issues(Request $request) {
-        $issue_filter = array();
+        if ($request->colors) {
+            $colors = [
+                '#FF0F00', '#FF6600', '#FF9E01',
+                '#FCD202', '#F8FF01', '#B0DE09',
+                '#04D215', '#04D215', '#0D52D1',
+                '#2A0CD0', '#8A0CCF', '#CD0D74',
+                '#754DEB', '#DDDDDD', '#333333'
+            ];
 
-        if ($request->has('status_id')) {
-            $issue_filter['status_id'] = $request->status_id;
+            $count_with_colors = [];
+
+
+//            $data = Project::countAllIssues($request->status_id, $request->updated_on);
+            $data = Project::countIssueOnParent($request->status_id, $request->updated_on);
+            foreach($data as $each) {
+                $temp = $each;
+                $temp['color'] = $colors[rand(0, count($colors)-1)];
+                $count_with_colors[] = $temp;
+            }
+            return $count_with_colors;
         }
-
-        if ($request->has('updated_on')) {
-            $issue_filter['updated_on'] = $request->updated_on;
-        }
-
-        return $this->issue->countPerProject($issue_filter);
+        return Project::countAllIssues($request->status_id, $request->updated_on);
     }
 
     public function count_issues_array(Request $request) {
-        $issue_filter = array();
-
-        if ($request->has('status_id')) {
-            $issue_filter['status_id'] = $request->status_id;
-        }
-
-        return $this->issue->countPerProjectArray($issue_filter);
+        return Project::countAllIssuesArray($request->status_id, $request->updated_on ?: date('Y-m-d'));
     }
 
     public function count_all_issues() {
-        return $this->issue->countAllByStatus();
+        return Status::countAllIssues();
     }
 
-    public function list_issues() {
-        return $this->issue->listPerProject(2);
-    }
 
-    public function list_issues_array() {
-        return $this->issue->listPerProjectArray();
+
+    public function list_issues(Request $request) {
+        return Issue::getPerProject($request->status_id, $request->updated_on);
+//        return $this->issue->listPerProject(2);
     }
 
     public function get_issue_between(Request $request) {
-        $sDate = $request->has('sdate') ? $request->sdate : null;
-        $eDate = $request->has('edate') ? $request->edate : null;
-        return $this->issue->getBetween($sDate, $eDate);
+        $sDate = $request->has('sdate') ? $request->sdate : Carbon::yesterday();
+        $eDate = $request->has('edate') ? $request->edate : Carbon::today();
+
+        if ($sDate == $eDate) {
+            return Issue::whereDate('updated_on', $sDate)->get();
+        }
+
+        return Issue::whereDate('updated_on', '>=', $sDate)->whereDate('updated_on', '<=', $eDate)->get();
+    }
+
+    public function count_issue_monthly(Request $request) {
+        return Issue::countBetween($request->sdate, $request->edate);
     }
 
 }
