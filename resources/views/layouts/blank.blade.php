@@ -21,6 +21,9 @@
         <link rel="stylesheet" href="{{ url('css/all-dashboard.min.css') }}">
 
         <style>
+            .nav_menu {
+                margin-bottom: 15px;
+            }
             .fixed-height-270 {
                 height: 270px;
             }

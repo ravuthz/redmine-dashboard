@@ -1,7 +1,6 @@
 @component('components.xpanel')
     @slot('title')
-        Transaction Summary
-        <small>Monthly progress</small>
+        {{ $issue_label }}
     @endslot
     @slot('content_class')
         scroll-height-270
