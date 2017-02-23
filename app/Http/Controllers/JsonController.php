@@ -30,8 +30,6 @@ class JsonController extends Controller
 
             $count_with_colors = [];
 
-
-//            $data = Project::countAllIssues($request->status_id, $request->updated_on);
             $data = Project::countIssueOnParent($request->status_id, $request->updated_on);
             foreach($data as $each) {
                 $temp = $each;
@@ -40,7 +38,7 @@ class JsonController extends Controller
             }
             return $count_with_colors;
         }
-        return Project::countAllIssues($request->status_id, $request->updated_on);
+        return Project::withCountIssueStatus($request->status_id);
     }
 
     public function count_issues_array(Request $request) {

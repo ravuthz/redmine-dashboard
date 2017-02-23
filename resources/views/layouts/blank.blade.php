@@ -38,6 +38,11 @@
                 font-size	: 11px;
             }
 
+            .home-md-box {
+                width: 100%;
+                height: 500px;
+            }
+
             /* Custome scrollbar */
             ::-webkit-scrollbar {
                 width: 7px;

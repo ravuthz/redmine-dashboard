@@ -20,7 +20,7 @@
             @foreach($items as $item)
                 <tr>
                     <td>{{ $item['name'] }}</td>
-                    <td class="fs15 fw700 text-right">{{ $item['number'] }}</td>
+                    <td class="fs15 fw700 text-right">{{ $item['issues_count'] }}</td>
                 </tr>
             @endforeach
         @endif

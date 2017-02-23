@@ -74,4 +74,21 @@ class Project extends Model
         }
         return $temp;
     }
+
+
+    ///
+
+    /**
+     * Select 'id', 'name', 'parent_id', 'created_on','updated_on'
+     * and count issues by status_id store in 'issues_count' from Project.
+     * @param $query
+     * @param $status_id
+     * @return mixed
+     */
+    public function scopeWithCountIssueStatus($query, $status_id) {
+        return $query->select(['id', 'name', 'parent_id', 'created_on','updated_on'])
+            ->withCount(['issues' => function($q) use ($status_id) {
+            return $q->where('status_id', $status_id);
+        }])->get();
+    }
 }
