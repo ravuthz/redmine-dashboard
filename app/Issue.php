@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Status;
 use DB;
 
 class Issue extends Model
@@ -66,28 +67,22 @@ class Issue extends Model
 
     public function scopeCountPerProjectByStatus($query, $status_id, $updated_on = NULL) {
         return $query->where('status_id', $status_id)->whereDate('updated_on', $updated_on ?: date('Y-m-d'))->count();
-
-//        $date = $updated_on ?: date('Y-m-d');
-//        $count = $query
-//            ->where('status_id', $status_id)
-//            ->whereDate('updated_on', $date)->count();
-//
-//        return $count;
-
     }
 
     public function scopeCountBetween($query, $sdate = null, $edate = null) {
         $sdate = $sdate ?: '2016-01-01';
         $edate = $edate ?: '2017-12-31';
 
-        $q = DB::table('issues as p')->selectRaw(
-            'updated_on, DATE_FORMAT(updated_on, "%Y-%m") as `date`, MONTH(updated_on) as `month`, YEAR(updated_on) as `year`,
-            (SELECT count(*) FROM issues WHERE status_id = 1 AND DATE_FORMAT(updated_on, "%Y-%m") = DATE_FORMAT(p.updated_on, "%Y-%m") ) as `status_1`,
-            (SELECT count(*) FROM issues WHERE status_id = 2 AND DATE_FORMAT(updated_on, "%Y-%m") = DATE_FORMAT(p.updated_on, "%Y-%m") ) as `status_2`,
-            (SELECT count(*) FROM issues WHERE status_id = 3 AND DATE_FORMAT(updated_on, "%Y-%m") = DATE_FORMAT(p.updated_on, "%Y-%m") ) as `status_3`,
-            (SELECT count(*) FROM issues WHERE status_id = 4 AND DATE_FORMAT(updated_on, "%Y-%m") = DATE_FORMAT(p.updated_on, "%Y-%m") ) as `status_4`,
-            (SELECT count(*) FROM issues WHERE status_id = 5 AND DATE_FORMAT(updated_on, "%Y-%m") = DATE_FORMAT(p.updated_on, "%Y-%m") ) as `status_5`'
-        );
+        $statuses = Status::pluck('id');
+
+        $sqls = [];
+        $sqls[] = 'updated_on, DATE_FORMAT(updated_on, "%Y-%m") as `date`, MONTH(updated_on) as `month`, YEAR(updated_on) as `year`';
+
+        foreach ($statuses as $id) {
+            $sqls[] = "(SELECT count(*) FROM issues WHERE status_id = $id AND DATE_FORMAT(updated_on, '%Y-%m') = DATE_FORMAT(p.updated_on, '%Y-%m') ) as `status_$id`";
+        }
+
+        $q = DB::table('issues as p')->selectRaw(implode(', ', $sqls));
 
         if ($sdate == $edate) {
             $q->whereDate('updated_on', $sdate);

@@ -38,72 +38,67 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12">
-                    <div class="x_panel">
-                        <div class="x_title">
-                            <h2>Transaction Summary
-                                <small>Monthly progress</small>
-                            </h2>
-                            <div class="filter">
-                                <div id="reportRange1" class="pull-right1" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc;">
-                                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                                    <span>January 1st 2016 - December 31th 2017</span> <b class="caret"></b>
-                                </div>
+                @component('components.xpanel-no-header', ['col' => 'col-md-12'])
+                    @slot('title')
+                        <h2>Transaction Summary
+                            <small>Monthly progress</small>
+                        </h2>
+                        <div class="filter">
+                            <div id="reportRange1" class="pull-right1" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc;">
+                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                <span>January 1st 2016 - December 31th 2017</span> <b class="caret"></b>
                             </div>
-                            <div class="clearfix"></div>
                         </div>
-                        <div class="x_content">
-                            <div id="serialChart"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{--<div class="row">--}}
-                {{--<div class="col-md-12">--}}
-                    {{--@component('components.xpanel')--}}
-                        {{--@slot('title')--}}
-                            {{--Transaction Summary--}}
-                            {{--<small>Monthly progress</small>--}}
-                        {{--@endslot--}}
-                        {{--<div id="serialChart"></div>--}}
-                    {{--@endcomponent--}}
-                {{--</div>--}}
-            {{--</div>--}}
-
-            <div class="row">
-                <div class="col-md-12">
-                    @component('components.xpanel')
-                        @slot('title')
-                            All Closed Issues
-                            <small>Activity shares</small>
-                        @endslot
-                        <div id="closeIssueChart" style="height: 500px; width: 100%;"></div>
-                    @endcomponent
-                </div>
+                    @endslot
+                    <div id="serialChart"></div>
+                @endcomponent
             </div>
 
             <div class="row">
-                <div class="col-md-6">
-                    @component('components.xpanel')
-                        @slot('title')
-                            All New Issues
-                            <small>Activity shares</small>
-                        @endslot
-                        <div id="allIssuePieChart1" style="height: 500px; width: 100%;"></div>
-                    @endcomponent
-                </div>
-                <div class="col-md-6">
-                    @component('components.xpanel')
-                        @slot('title')
-                            All New Issues
-                            <small>Activity shares</small>
-                        @endslot
-                        <div id="allIssuePieChart2" style="height: 500px; width: 100%;"></div>
-                    @endcomponent
-                </div>
+                @component('components.xpanel-in-col', ['col' => 'col-md-12'])
+                    @slot('title')
+                        All Closed Issues
+                        <small>Activity shares</small>
+                    @endslot
+                    <div id="closeIssueChart" class="home-md-box"></div>
+                @endcomponent
             </div>
 
+            <div class="row">
+                @component('components.xpanel-in-col', ['col' => 'col-md-6'])
+                    @slot('title')
+                        All New Issues
+                        <small>Activity shares</small>
+                    @endslot
+                    <div id="allIssuePieChart1" class="home-md-box"></div>
+                @endcomponent
+
+                @component('components.xpanel-in-col', ['col' => 'col-md-6'])
+                    @slot('title')
+                        All Closed Issues
+                        <small>Activity shares</small>
+                    @endslot
+                    <div id="allIssuePieChart5" class="home-md-box"></div>
+                @endcomponent
+            </div>
+
+            <div class="row">
+                @component('components.xpanel-in-col', ['col' => 'col-md-6'])
+                    @slot('title')
+                        All QA Test Issues
+                        <small>Activity shares</small>
+                    @endslot
+                    <div id="allIssuePieChart13" class="home-md-box"></div>
+                @endcomponent
+
+                @component('components.xpanel-in-col', ['col' => 'col-md-6'])
+                    @slot('title')
+                        All Waiting to Deploy Issues
+                        <small>Activity shares</small>
+                    @endslot
+                    <div id="allIssuePieChart14" classs="home-md-box"></div>
+                @endcomponent
+            </div>
 
         </div>
     </div>
