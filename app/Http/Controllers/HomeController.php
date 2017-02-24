@@ -24,8 +24,9 @@ class HomeController extends Controller
 
     public function slider() {
         $data['statuses'] = $this->all_issues_statuses();
-        $data['currently'] = $this->all_issues_status_updated_today();
+//        $data['currently'] = $this->all_issues_status_updated_today();
         $data['counts'] = Issue::countPerProjectByStatuses($this->status_ids);
+        $data['count_issue_via_status'] = $this->count_issue_via_status();
         return view('home.slider', $data);
     }
 
