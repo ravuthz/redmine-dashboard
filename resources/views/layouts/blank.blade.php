@@ -4,20 +4,15 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-        <!-- Meta, title, CSS, favicons, etc. -->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Dashboard</title>
 
-        <!-- Bootstrap -->
         <link href="{{ asset("css/bootstrap.min.css") }}" rel="stylesheet">
-        <!-- Font Awesome -->
         <link href="{{ asset("css/font-awesome.min.css") }}" rel="stylesheet">
-        <!-- Custom Theme Style -->
         <link href="{{ asset("css/gentelella.min.css") }}" rel="stylesheet">
-
         <link rel="stylesheet" href="{{ url('css/all-dashboard.min.css') }}">
 
         <style>
@@ -93,14 +88,12 @@
 
                 @yield('main_container')
 
-                <!-- footer content -->
                 <footer>
                     <div class="pull-right">
                         Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
                     </div>
                     <div class="clearfix"></div>
                 </footer>
-                <!-- /footer content -->
 
             </div>
         </div>
@@ -108,16 +101,10 @@
         <script src="{{ asset("js/jquery.min.js") }}"></script>
         <script src="{{ asset("js/bootstrap.min.js") }}"></script>
         <script src="{{ asset('js/all-dashboard.min.js') }}"></script>
-
-        {{--<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>--}}
-        {{--<script src="https://www.amcharts.com/lib/3/serial.js"></script>--}}
-        {{--<script src="https://www.amcharts.com/lib/3/pie.js"></script>--}}
-        {{--<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>--}}
-        {{--<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>--}}
-
         <script src="{{ asset('js/custom.js') }}"></script>
 
         @stack('scripts')
 
     </body>
+
 </html>

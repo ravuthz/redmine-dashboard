@@ -76,8 +76,8 @@ class Project extends Model
     }
 
 
-    ///
-
+    // withCountIssueStatus
+    protected $selectFields = ['id', 'name', 'parent_id', 'created_on','updated_on'];
     /**
      * Select 'id', 'name', 'parent_id', 'created_on','updated_on'
      * and count issues by status_id store in 'issues_count' from Project.
@@ -86,9 +86,21 @@ class Project extends Model
      * @return mixed
      */
     public function scopeWithCountIssueStatus($query, $status_id) {
-        return $query->select(['id', 'name', 'parent_id', 'created_on','updated_on'])
+        return $query->select($this->selectFields)
             ->withCount(['issues' => function($q) use ($status_id) {
-            return $q->where('status_id', $status_id);
-        }])->get();
+                if ($status_id) {
+                    return $q->where('status_id', $status_id);
+                }
+            }])->get();
+    }
+
+    // parentCountIssueStatuses
+    public function scopeParentCountIssueStatuses($query, $status_id = NULL) {
+        return $query->select($this->selectFields)
+            ->withCount(['issues' => function($q) use ($status_id) {
+                if ($status_id) {
+                    return $q->where('status_id', $status_id);
+                }
+            }])->where('parent_id', NULL)->get();
     }
 }

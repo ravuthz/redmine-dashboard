@@ -8,32 +8,32 @@
                     'title' => 'New',
                     'content' => 'The issues created recently',
                     'icon' => 'fa fa-caret-square-o-right',
-                    'count' => $count[1],
-                    'id' => 'countNewIssues'
+                    'count' => $statuses->find(1)->issues_count,
+                    'id' => 'countIssueStatus1'
                 ])
 
                 @include('partials.dash_box', [
                     'title' => 'In Progress',
                     'content' => 'The issues are fixing',
                     'icon' => 'fa fa-comments-o',
-                    'count' => $count[2],
-                    'id' => 'countInProgressIssues'
+                    'count' => $statuses->find(2)->issues_count,
+                    'id' => 'countIssueStatus2'
                 ])
 
                 @include('partials.dash_box', [
-                    'title' => 'Resolved',
+                    'title' => 'QA Test',
                     'content' => 'The issues are fixed and wait to testing',
                     'icon' => 'fa fa-sort-amount-desc',
-                    'count' => $count[3],
-                    'id' => 'countResolvedIssues'
+                    'count' => $statuses->find(13)->issues_count,
+                    'id' => 'countIssueStatus13'
                 ])
 
                 @include('partials.dash_box', [
                     'title' => 'Closed',
                     'content' => 'The issues are tested, wait to deploy',
                     'icon' => 'fa fa-check-square-o',
-                    'count' => $count[5],
-                    'id' => 'countClosedIssues'
+                    'count' => $statuses->find(5)->issues_count,
+                    'id' => 'countIssueStatus5'
                 ])
             </div>
 

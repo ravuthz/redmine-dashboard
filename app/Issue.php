@@ -59,10 +59,12 @@ class Issue extends Model
         return $query->where('status_id', $status_id)->count();
     }
 
+    // countByStatuses
     public function scopeCountByStatuses($query, $status_ids) {
+        $temp = $query;
         $counts = array();
         foreach ($status_ids as $id) {
-            $counts[$id] = $query->where('status_id', $id)->count();
+            $counts[$id] = $temp->where('status_id', $id)->count();
         }
         return $counts;
     }
@@ -127,21 +129,6 @@ class Issue extends Model
         return $this->client->issue_status->listing();
     }
 
-//    public function getByStatus($query, $status = 0) {
-//        $issue_filter = array(
-//            'sort' => 'desc',
-//            'limit' => self::MAX_ISSUE
-//        );
-//
-//        if ($status > 0) {
-//            $issue_filter['status_id'] = $status;
-//        }
-//
-//        $data = $this->client->issue->all($issue_filter);
-//
-//        return $data;
-//    }
-
     public function countPerProject($issue_filter = array()) {
         $counts = array();
         $projects = $this->client->project->all();
@@ -169,10 +156,6 @@ class Issue extends Model
         $name = array();
         $number = array();
         $projects = $this->client->project->all();
-
-//        if ($request->has('status_id')) {
-//            $issue_filter['status_id'] = $request->status_id;
-//        }
 
         if (empty($projects)) {
             return array(

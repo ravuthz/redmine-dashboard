@@ -19,6 +19,8 @@ class HomeController extends Controller
     {
         $data['statuses'] = $this->all_issues_statuses();
         $data['count'] = Issue::countByStatuses([1,2,3,5,13,14]);
+
+        $data['statuses'] = Status::withCountIssues();
         return view('home.index', $data);
     }
 
@@ -49,14 +51,6 @@ class HomeController extends Controller
         $data = [];
         foreach($this->status_ids as $id) {
             $data[$id] = Issue::getByStatus($id);
-        }
-        return $data;
-    }
-
-    private function all_issues_status_updated_today() {
-        $data = [];
-        foreach($this->status_ids as $id) {
-            $data[$id] = Issue::getByStatusAndUpdatedOn($id);
         }
         return $data;
     }

@@ -42,6 +42,22 @@ var colors2 = [
     "#49A9EA"
 ];
 
+var backgroundColor = [
+    "#BDC3C7",
+    "#9B59B6",
+    "#E74C3C",
+    "#26B99A",
+    "#3498DB"
+];
+
+var hoverBackgroundColor = [
+    "#CFD4D8",
+    "#B370CF",
+    "#E95E4F",
+    "#36CAAB",
+    "#49A9EA"
+];
+
 var statuses = {
     "1": "New",
     "2": "In Progress",
@@ -51,7 +67,8 @@ var statuses = {
     "14": "waiting deployment"
 };
 
-var refreshTime = 30000;
+var refreshTime = 30000; // 30 seconds
+var slideTime = 7000; // 7 seconds
 
 
 function am_chart(id, data, valueField, titleField) {
@@ -106,6 +123,8 @@ function pie_chart(id, data) {
         "dataProvider": data,
         "valueField": "issues_count",
         "titleField": "name",
+        "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+        "labelText": "[[title]] ( [[value]] )",
         "export": {
             "enabled": false
         }
@@ -277,7 +296,7 @@ function total_issue_chart() {
 function total_issue_list_item(selector, params) {
     console.log('total_issue_list call with ', selector, params);
     if ($(selector).length) {
-        $.get('json/count_issues' + params, function(res) {
+        $.get('json/count_issue_all_statuses' + params, function(res) {
             table_issue_list(selector, res);
         });
     }
@@ -285,7 +304,7 @@ function total_issue_list_item(selector, params) {
 
 //TODO Done total_issue_list
 function total_issue_list() {
-    var params = "?updated_on=2017-02-10&";
+    var params = '?main_project=true&';
     total_issue_list_item('#tableIssue1', params + 'status_id=1');
     total_issue_list_item('#tableIssue2', params + 'status_id=2');
     total_issue_list_item('#tableIssue13', params + 'status_id=13');
@@ -357,6 +376,17 @@ function home_page() {
     home_page_pie_chart('allIssuePieChart5', '?status_id=5');
     home_page_pie_chart('allIssuePieChart13', '?status_id=13');
     home_page_pie_chart('allIssuePieChart14', '?status_id=14');
+
+
+         // countIssueStatus1
+        $.get('json/count_issue_all_statuses', function(res) {
+            $.each(res, function(i,e) {
+                if ($('#countIssueStatus' + i).length) {
+                    $('#countIssueStatus' + i + ' count').text(e.issues_count);
+                }
+            });
+        });
+
 }
 
 function refreshData() {
@@ -376,9 +406,9 @@ function refreshData() {
 
 $(function () {
     $('.carousel').carousel({
-        interval: 3000,
+        interval: slideTime,
         pause: "hover"
-    })
+    });
 
     refreshData();
 
@@ -404,27 +434,15 @@ function init_chart_doughnut(){
                 ],
                 datasets: [{
                     data: [15, 20, 30, 10, 30],
-                    backgroundColor: [
-                        "#BDC3C7",
-                        "#9B59B6",
-                        "#E74C3C",
-                        "#26B99A",
-                        "#3498DB"
-                    ],
-                    hoverBackgroundColor: [
-                        "#CFD4D8",
-                        "#B370CF",
-                        "#E95E4F",
-                        "#36CAAB",
-                        "#49A9EA"
-                    ]
+                    backgroundColor: backgroundColor,
+                    hoverBackgroundColor: hoverBackgroundColor
                 }]
             },
             options: {
                 legend: false,
                 responsive: false
             }
-        }
+        };
 
         $('.canvasDoughnut').each(function(){
             var chart_element = $(this);

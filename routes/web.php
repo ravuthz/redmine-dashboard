@@ -31,6 +31,7 @@ Route::get('json/count_all_issues', 'JsonController@count_all_issues');
 Route::get('json/get_issue_between', 'JsonController@get_issue_between');
 Route::get('json/count_issues_array', 'JsonController@count_issues_array');
 Route::get('json/count_issue_monthly', 'JsonController@count_issue_monthly');
+Route::get('json/count_issue_all_statuses', 'JsonController@count_issue_all_statuses');
 
 
 

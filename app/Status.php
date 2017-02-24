@@ -8,6 +8,8 @@ class Status extends Model
 {
     protected $table = 'issue_statuses';
 
+    protected $selectFields = ['id', 'name'];
+
     public function issues()
     {
         return $this->hasMany('App\Issue');
@@ -20,5 +22,11 @@ class Status extends Model
             $counts[$status->id] = $status->issues()->count();
         }
         return $counts;
+    }
+
+    // withCountIssues
+    // Select Status + Count all issues
+    public function scopeWithCountIssues($query) {
+        return $query->select($this->selectFields)->withCount('issues')->get();
     }
 }

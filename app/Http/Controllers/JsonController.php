@@ -18,6 +18,15 @@ class JsonController extends Controller
         return Issue::getByStatus($request->status_id);
     }
 
+    public function count_issue_all_statuses(Request $request) {
+        if ($request->has('main_project')) {
+            return Project::parentCountIssueStatuses($request->status_id);
+        }
+        return Status::withCountIssues();
+    }
+
+
+
     public function count_issues(Request $request) {
         if ($request->colors) {
             $colors = [
