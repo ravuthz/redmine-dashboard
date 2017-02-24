@@ -83,6 +83,7 @@ function am_chart(id, data, valueField, titleField) {
         "marginTop": 0,
         "depth3D": 25,
         "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+        "labelText": "[[title]] ( [[value]] )",
         "angle": 30,
         "export": {
             "enabled": false
@@ -337,7 +338,7 @@ function home_page_pie_chart(id, params) {
     console.log('home_page_pie_chart with ', id, params);
     if ($('#' + id).length) {
         $.get('json/count_issues' + params, function(res) {
-            console.log('home_page_pie_chart : ', res);
+            console.log('home_page_pie_chart ' + id + ' => ', res);
             pie_chart(id, res);
         });
     }
