@@ -411,6 +411,10 @@ $(function () {
         pause: "hover"
     });
 
+    $('#toggleFullScreen').click(function() {
+        toggleFullScreen();
+    });
+
     refreshData();
 
     setInterval(function(){
@@ -449,5 +453,31 @@ function init_chart_doughnut(){
             var chart_element = $(this);
             var chart_doughnut = new Chart( chart_element, chart_doughnut_settings);
         });
+    }
+}
+
+function toggleFullScreen() {
+    alert('123');
+    // alternative standard method
+    if (!document.fullscreenEnabled && !document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement ) {  // current working methods
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        } else if (document.documentElement.msRequestFullscreen) {
+            document.documentElement.msRequestFullscreen();
+        } else if (document.documentElement.mozRequestFullScreen) {
+            document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullscreen) {
+            document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        }
     }
 }
